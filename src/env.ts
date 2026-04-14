@@ -2,9 +2,15 @@ import 'dotenv/config';
 
 function required(key: string): string {
   const v = process.env[key];
-  if (!v) throw new Error(`Env var ${key} is required`);
+  if (!v) {
+    // Flush to stderr immediately so Cloud Run captures it before crash
+    process.stderr.write(`[ENV] Missing required env var: ${key}\n`);
+    throw new Error(`Env var ${key} is required`);
+  }
   return v;
 }
+
+process.stderr.write(`[ENV] Booting with NODE_ENV=${process.env.NODE_ENV}, PORT=${process.env.PORT}\n`);
 
 export const env = {
   db: {
