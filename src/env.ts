@@ -15,7 +15,7 @@ export const env = {
     password: required('DB_PASSWORD'),
     ssl: { rejectUnauthorized: false } as const,
   },
-  port: Number(process.env.PORT ?? 3000),
+  port: Number(process.env.PORT ?? 8080),
   corsOrigins: (process.env.CORS_ORIGINS ?? '')
     .split(',')
     .map((o) => o.trim())
